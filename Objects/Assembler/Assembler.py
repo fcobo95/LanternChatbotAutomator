@@ -8,7 +8,7 @@ import json
 
 class Assembler:
     """
-    DOCSTRING
+    DOCSTRINGS
     """
 
     def __init__(self, workspace_id=None, username=None, password=None, version=None):
