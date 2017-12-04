@@ -9,9 +9,9 @@ class Intent:
 
     def __init__(self, username=None, password=None, version=None):
         self.conversation = Conversation(
-            username=username,  # '46b3dba5-3f3e-4b04-b8f2-38e65eaefe1a',
-            password=password,  # "7Q3xmUgDqYxM",
-            version=version  # "2017-05-26"
+            username=username,
+            password=password,
+            version=version
         )
 
     def get_all_intents(self, workspace_id=None, export=False, page_limit=None, include_count=False, sort=None,

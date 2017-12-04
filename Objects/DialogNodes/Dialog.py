@@ -7,22 +7,23 @@ class Dialog:
     DOCSTRING
     """
 
-    def __init__(self, username, password, version):
+    def __init__(self, username=None, password=None, version=None):
         self.conversation = Conversation(
             username=username,
             password=password,
             version=version
         )
 
-    def get_all_nodes(self, workspace_id, dialog_node):
+    def get_all_nodes(self, workspace_id=None, dialog_node=None):
         response = self.conversation.get_dialog_node(
             workspace_id=workspace_id,
             dialog_node=dialog_node
         )
         print(json.dumps(response, indent=2))
 
-    def create_dialog_node(self, workspace_id, dialog_node, description, conditions, parent, previous_sibling, output,
-                           context, metadata, next_step, actions, title, node_type, event_name, variable):
+    def create_dialog_node(self, workspace_id=None, dialog_node=None, description=None, conditions=None, parent=None,
+                           previous_sibling=None, output=None, context=None, metadata=None, next_step=None,
+                           actions=None, title=None, node_type=None, event_name=None, variable=None):
         response = self.conversation.create_dialog_node(
             workspace_id=workspace_id,
             dialog_node=dialog_node,
@@ -42,24 +43,24 @@ class Dialog:
         )
         print(json.dumps(response, indent=2))
 
-    def delete_dialog_node(self, workspace_id, dialog_node):
+    def delete_dialog_node(self, workspace_id=None, dialog_node=None):
         self.conversation.delete_dialog_node(
             workspace_id=workspace_id,
             dialog_node=dialog_node
         )
         print("Deleted node {}".format(dialog_node))
 
-    def get_dialog_node(self, workspace_id, dialog_node):
+    def get_dialog_node(self, workspace_id=None, dialog_node=None):
         response = self.conversation.get_dialog_node(
             workspace_id=workspace_id,
             dialog_node=dialog_node
         )
         print(json.dumps(response, indent=2))
 
-    def update_dialog_node(self, workspace_id, dialog_node, new_dialog_node, new_description=None, new_conditions=None,
-                           new_parent=None, new_previous_sibling=None, new_output=None, new_context=None,
-                           new_metadata=None, new_next_step=None, new_title=None, new_type=None, new_event_name=None,
-                           new_variable=None, new_actions=None):
+    def update_dialog_node(self, workspace_id=None, dialog_node=None, new_dialog_node=None, new_description=None,
+                           new_conditions=None, new_parent=None, new_previous_sibling=None, new_output=None,
+                           new_context=None, new_metadata=None, new_next_step=None, new_title=None, new_type=None,
+                           new_event_name=None, new_variable=None, new_actions=None):
         response = self.conversation.update_dialog_node(
             workspace_id=workspace_id,
             dialog_node=dialog_node,
