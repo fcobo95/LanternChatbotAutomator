@@ -34,3 +34,4 @@ class Assembler:
         print(json.dumps(entities, indent=2))
 
         dialog_nodes = self.dialog_nodes.create_dialog_node()
+        print(json.dumps(dialog_nodes, indent=2))
