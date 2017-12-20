@@ -1,0 +1,71 @@
+{
+  "dialog_nodes": [
+    {
+      "type": "standard",
+      "title": "Dialog Node 1.1",
+      "output": {
+        "text": {
+          "values": [
+            "there"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_1_1513736688173",
+      "context": null,
+      "created": "2017-12-20T02:24:04.781Z",
+      "updated": "2017-12-20T02:25:24.999Z",
+      "metadata": {},
+      "next_step": null,
+      "conditions": "#Hello",
+      "description": null,
+      "dialog_node": "node_2_1513736692230",
+      "previous_sibling": null
+    },
+    {
+      "type": "standard",
+      "title": "Dialog Node 1.1.1",
+      "output": {
+        "text": {
+          "values": [
+            "you."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_2_1513736692230",
+      "context": null,
+      "created": "2017-12-20T02:24:07.509Z",
+      "updated": "2017-12-20T02:25:27.592Z",
+      "metadata": {},
+      "next_step": null,
+      "conditions": "#Hello",
+      "description": null,
+      "dialog_node": "node_3_1513736694946",
+      "previous_sibling": null
+    },
+    {
+      "type": "standard",
+      "title": "Dialog Node 1",
+      "output": {
+        "text": {
+          "values": [
+            "Hi"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": null,
+      "context": null,
+      "created": "2017-12-20T02:24:01.247Z",
+      "updated": "2017-12-20T02:25:46.663Z",
+      "metadata": {},
+      "next_step": null,
+      "conditions": "#Hello",
+      "description": null,
+      "dialog_node": "node_1_1513736688173",
+      "previous_sibling": "Welcome"
+    }
+  ],
+  "workspace_id": "2bdbcf79-d59a-4d30-90e0-af2b62f6b37a"
+}
