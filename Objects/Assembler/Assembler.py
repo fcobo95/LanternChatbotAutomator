@@ -15,51 +15,65 @@ class Assembler:
     """
 
     def __init__(self):
+        # Loads all the required data from the AppSettings.json file.
         app_setting_directory = '../../Data/AppSettings/AppSettings.json'
         csv_directory = '../../Data/CSVFiles/MainCSV.csv'
         self.readTheCSV = theCSV.ReaderCSV(csv_directory).final_csv_data
         self.readTheJSON = theJSON.ReaderJSON(app_setting_directory).final_json_data
-        self.conversation = Conversation(
-            username=self.readTheJSON['username'],
-            password=self.readTheJSON['password'],
-            version=self.readTheJSON['version']
-        )
-        self.workspace_id = self.readTheJSON['workspace_id']
-        self.workspaces = Workspace.Workspace(username=self.readTheJSON['username'],
-                                              password=self.readTheJSON['password'],
-                                              version=self.readTheJSON['version'])
-        self.dialog_nodes = Dialog.Dialog(username=self.readTheJSON['username'], password=self.readTheJSON['password'],
-                                          version=self.readTheJSON['version'])
-        self.entities = Entity.Entity(username=self.readTheJSON['username'], password=self.readTheJSON['password'],
-                                      version=self.readTheJSON['version'])
-        self.synonyms = Synonym.Synonym(username=self.readTheJSON['username'], password=self.readTheJSON['password'],
-                                        version=self.readTheJSON['version'])
-        self.values = Value.Value(username=self.readTheJSON['username'], password=self.readTheJSON['password'],
-                                  version=self.readTheJSON['version'])
-        self.intents = Intent.Intent(username=self.readTheJSON['username'], password=self.readTheJSON['password'],
-                                     version=self.readTheJSON['version'])
-        self.examples = Example.Example(username=self.readTheJSON['username'], password=self.readTheJSON['password'],
-                                        version=self.readTheJSON['version'])
+        self.theUserName = self.readTheJSON['username']
+        self.thePassword = self.readTheJSON['password']
+        self.theVersion = self.readTheJSON['version']
+        self.theWorkspaceID = self.readTheJSON['workspace_id']
+
+        # Creates a new instance of the Conversation V1 object.
+        self.theConversation = Conversation(username=self.theUserName, password=self.thePassword,
+                                            version=self.theVersion)
+
+        # We initialize all necessary objects to be able to assemble the initial workspace.
+        self.workspace_id = self.theWorkspaceID
+        self.workspaces = Workspace.Workspace(self.theUserName, self.thePassword, self.theVersion)
+        self.dialog_nodes = Dialog.Dialog(self.theUserName, self.thePassword, self.theVersion)
+        self.entities = Entity.Entity(self.theUserName, self.thePassword, self.theVersion)
+        self.synonyms = Synonym.Synonym(self.theUserName, self.thePassword, self.theVersion)
+        self.values = Value.Value(self.theUserName, self.thePassword, self.theVersion)
+        self.intents = Intent.Intent(self.theUserName, self.thePassword, self.theVersion)
+        self.examples = Example.Example(self.theUserName, self.thePassword, self.theVersion)
 
     def assemble_the_workspace(self):
-        intents = self.intents.create_intent()
-        print(json.dumps(intents, indent=2))
+        theIntents = self.readTheCSV['Intents']
+        theExamples = self.readTheCSV['Examples']
 
-        entities = self.intents.create_intent()
-        print(json.dumps(entities, indent=2))
+        theWorkspaceIntents = theIntents
+        theIntentExamples = theExamples
 
-        dialog_nodes = self.dialog_nodes.create_dialog_node()
-        print(json.dumps(dialog_nodes, indent=2))
+        theIntentsArray = []
+        theExamplesArray = []
+        theCounter = 0
+        for intent in theWorkspaceIntents:
+
+            theIntentsArray.append(intent)
+            theClientExamples = self.readTheCSV['Examples']
+            if theClientExamples.count() > 0:
+                theCustomExamples = theClientExamples.at[theCounter]
+                theCounter += 1
+                each_custom_intent = str(theCustomExamples)
+                if not each_custom_intent == "nan":
+                    theQuestionsArray = each_custom_intent.split(";")
+                    for each_example in theQuestionsArray:
+                        theCustomExampleIntent = {
+                            "text": each_example}
+                        theExamplesArray.append(theCustomExampleIntent)
+                        print(theExamplesArray)
+                else:
+                    print("There are NO client custom examples for this intent {}.".format(intent))
+            else:
+                print("Well, there are some that have, others don't.")
+
+        # for each_val in theIntents:
+        #     self.intents.create_intent(workspace_id=self.workspace_id, intent=each_val,
+        #                                examples=theExamplesArray)
+        #     theCounter += 1
 
 
-# theAssembler = Assembler()
-# username = theAssembler.readTheJSON['username']
-# password = theAssembler.readTheJSON['password']
-# version = theAssembler.readTheJSON['version']
-# workspace_id = theAssembler.readTheJSON['workspace_id']
-# csv_workspace_id = theAssembler.readTheCSV['WorkspaceName'].at[0]
-# print(username)
-# print(password)
-# print(version)
-# print(workspace_id)
-# print(csv_workspace_id)
+theAssembler = Assembler()
+theAssembler.assemble_the_workspace()
